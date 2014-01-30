@@ -1,0 +1,25 @@
+application: vnitlostnfound
+version: 2
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: static/favicon.ico
+  upload: static/favicon\.ico
+- url: /static/favicon\.ico
+  static_files: static/favicon.ico
+  upload: static/favicon\.ico
+- url: /robots\.txt
+  static_files: robots.txt
+  upload: robots\.txt
+- url: /static/style\.css
+  static_files: static/style.css
+  upload: static/style\.css
+- url: .*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: "2.5.1"

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="/static/favicon.ico" />
+	<meta name="description" content="VNIT Lost n Found is an app to track lost n found items." />
+	<meta name="keywords" content="VNITLostnFound, VNIT, Nagpur, NIT, Lost, Found, LostnFound" />
+	<meta http-equiv="cache-control" content="no-store" />
+	<meta http-equiv="content-language" content="en-US" />
+	<title>Tag - {{ tag }}</title>
+	<link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
+	<!--Google Analytics-->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-33241707-2', 'vnitlostnfound.appspot.com');
+	  ga('send', 'pageview');
+
+	</script>
+	<!--End of Google Analytics script-->
+</head>
+<body>
+	<b><h3>All items tagged with <a class="tag" href="/tag/{{ tag }}">{{ tag }}</a></h3></b>
+	{% if not items %}No items to show.{% endif %}
+	{% for item in items %}
+	<div class="item">
+		<div class="full">
+			<span class="item-title"><a href="/item/{{ item.key.id }}">{{ item.title }}</a><span class="item-created">{{ item.created }}</span></span>
+		</div>
+		<div class="image">
+			<a href="{{ item.img_url }}"><img src="{{ item.img_url }}" alt="image" align="center" height="150" width="200" title="{{ item.title }}"></img></a>
+		</div>
+		<div class="content">
+			Tagged with {% for tag in item.tags %}<a class="tag" href="/tag/{{ tag }}">{{ tag }}</a>{% if not forloop.last %} + {% endif %}{% endfor %}<br>
+			<table class="small_table">
+			<tr><td align="right">Date -</td><td align="left"><b>{{ item.date }}</b></td></tr>
+			<tr><td align="right">Location -</td><td align="left"><b>{{ item.location }}</b></td></tr>
+			<tr><td align="right">Name - </td><td align="left"><b>{{ item.owner }}</b></td></tr>
+			<tr><td align="right">Phone - </td><td align="left"><b>{{ item.phone }}</b></td></tr>
+			</table>
+		</div>
+		<div class="clear"></div>
+	</div>
+	{% endfor %}
+	<div class="footer">
+		<a href="/submit">Submit</a> | <a href="/about">About</a> | <a href="/">All</a> | <a href="/lost">Lost</a> | <a href="/found">Found</a>
+	</div>
+</body>
+</html>

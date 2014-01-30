@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="shortcut icon" href="./favicon.ico">
+	<meta name="description" content="VNIT Lost n Found is an app to track lost n found items.">
+	<meta name="keywords" content="VNITLostnFound, VNIT, Nagpur, NIT, Lost, Found, LostnFound">
+	<meta http-equiv="cache-control" content="no-store">
+	<meta http-equiv="content-language" content="en-US">
+	<title>Submit Form</title>
+	<link rel="stylesheet" href="./static/style.css" type="text/css" media="screen">
+	<!--Google Analytics-->
+	<script async="" src="file://www.google-analytics.com/analytics.js"></script><script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-33241707-2', 'vnitlostnfound.appspot.com');
+	  ga('send', 'pageview');
+
+	</script>
+	<!--End of Google Analytics script-->
+</head>
+<body>
+	<br>
+	<div>
+	<select name="type" id="type" form="main_form" autofocus>
+		<option value="lost" selected>Lost</option>
+		<option value="found">Found</option>
+	</select>
+	</div>
+
+	<script>
+		var RecaptchaOptions = {
+		   theme : 'white'
+		};
+	</script>
+
+	<form method="POST" action="/submit" name="main_form" id="main_form">
+		<table>
+		<tr>
+			<td align="right"><label for="title">Title -</label></td>
+			<td><input type="text" id="title" name="title" placeholder="Black Samsung Galaxy S3" maxlength="50" class="resizedTextbox" required></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="location">Location -</label></td>
+			<td><input type="text" id="location" name="location" placeholder="Diagon Alley" class="resizedTextbox" required></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="when">Found/Lost on</label></td>
+			<td><input type="date" id="date" name="date" class="resizedTextbox" value="{{today}}"required></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="tags">Tags -</label></td>
+			<td><input type="text" id="tags" name="tags" class="resizedTextbox" placeholder="HB3, CIV, AUDI, BT10CIV, 2012T" value=""required></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="url"><a href="http://imgur.com/">Image (url)</a> -</label></td>
+			<td><input type="url" id="url" name="url" placeholder="http://i.imgur.com/oxXueNL.jpg" class="resizedTextbox"></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="description">Description -</label></td>
+			<td><textarea rows="3" id="description" name="description" maxlength="100" placeholder="Red case, brand new, lost in evening, bla bla bla"></textarea>
+		</tr>
+		<tr>
+			<td align="right"><label for="name">Name -</label></td>
+			<td><input type="text" id="name" name="name" maxlength="30" placeholder="Ashish Patil" class="resizedTextbox" required></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="phone">Phone -</label></td>
+			<td><input type="text" id="phone" name="phone" maxlength="20" placeholder="+919028091191" class="resizedTextbox" required></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="email">Email -</label></td>
+			<td><input type="email" id="email" name="email" maxlength="35" placeholder="larry_page@gmail.com" class="resizedTextbox"></td>
+		</tr>
+		<tr>
+			<td align="right"><label for="other_contact">Contact - </label></td>
+			<td><textarea rows="3" id="other_contact" name="other_contact" maxlength="100" placeholder="Address, alternate mobile numbers, etc"></textarea></td>
+		</tr>
+		</table>
+
+		<div class="help"><a href="http://imgur.com/">Use Imgur for uploading pics & then paste url above</a><br>Use simple, concise & comma-separated tags <= 3</div>
+		<!-- Begin reCaptcha -->
+		<script type="text/javascript"
+			 src="http://www.google.com/recaptcha/api/challenge?k=6Lfovu0SAAAAAIlxm2lwkKfUutNyBb0Mm9GV9v_1">
+		</script>
+		<noscript>
+			<iframe src="http://www.google.com/recaptcha/api/noscript?k=6Lfovu0SAAAAAIlxm2lwkKfUutNyBb0Mm9GV9v_1" frameborder="0"></iframe><br>
+			<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+			<input type="hidden" name="recaptcha_response_field" value="manual_challenge" tabindex="-1">
+		</noscript>
+		{% if bad_captcha %}
+		<div class="error">Bad captcha! Please retry.</div>
+		{% endif %}
+		<!-- End reCaptcha -->
+		<div class="submit">
+            <input type="submit" value="Submit">
+        </div>
+	</form>
+	<div class="footer">
+		<a href="/submit">Submit</a> | <a href="/about">About</a> | <a href="/">All</a> | <a href="/lost">Lost</a> | <a href="/found">Found</a>
+	</div>
+</body>
+</html>

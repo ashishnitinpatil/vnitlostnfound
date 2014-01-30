@@ -1,0 +1,28 @@
+<rss version="2.0">
+
+<channel>
+  <title>VNIT Lost n Found</title>
+  <link>http://vnitlostnfound.appspot.com/feed</link>
+  <description>Lost n Found Portal for VNIT</description>
+  
+  <item>
+    <title>BlackBerry N00b</title>
+    <link>http://vnitlostnfound.appspot.com/item/4993981813358592</link>
+	<author>n00b som3on3q</author>
+	<pubDate>Jan. 30, 2014, 6:47 p.m.</pubDate>
+    <description>lost by n00b som3on3q (Phone - 90210913290) on 2014-01-30 near Hogwarts</description>
+    <guid>http://vnitlostnfound.appspot.com/item/4993981813358592</guid>
+  </item>
+  
+  <item>
+    <title>2 Cute Bunnies! (Testing)</title>
+    <link>http://vnitlostnfound.appspot.com/item/6401356696911872</link>
+	<author>Ashish Patil</author>
+	<pubDate>Jan. 30, 2014, 6:39 p.m.</pubDate>
+    <description>found by Ashish Patil (Phone - 9028095185) on 2014-01-30 near Y Point</description>
+    <guid>http://vnitlostnfound.appspot.com/item/6401356696911872</guid>
+  </item>
+  
+</channel>
+
+</rss>

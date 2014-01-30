@@ -1,0 +1,19 @@
+<rss version="2.0">
+
+<channel>
+  <title>VNIT Lost n Found</title>
+  <link>http://vnitlostnfound.appspot.com/feed</link>
+  <description>Lost n Found Portal for VNIT</description>
+  {% for item in items %}
+  <item>
+    <title>{{ item.title }}</title>
+    <link>http://vnitlostnfound.appspot.com/item/{{ item.key.id }}</link>
+	<author>{{ item.owner }}</author>
+	<pubDate>{{ item.created }}</pubDate>
+    <description>{{ item.item_type }} by {{ item.owner }} (Phone - {{ item.phone }}) on {{ item.date }} near {{ item.location }}</description>
+    <guid>http://vnitlostnfound.appspot.com/item/{{ item.key.id }}</guid>
+  </item>
+  {% endfor %}
+</channel>
+
+</rss>
