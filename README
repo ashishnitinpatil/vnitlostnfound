@@ -3,7 +3,7 @@ Please refer to the LICENSE file for licensing of the project.
 Project - VNIT LOST N FOUND
 CREATOR - Ashish Nitin Patil aka !mmorta!
 CREATED - 30th of January, 2014 (v1)
-UPDATED - 31st of January, 2014 (v2)
+UPDATED - 1st of February, 2014 (v2)
 
 Summary of the Project -
 	The app.yaml contains url Handler settings, which runs the main.py.
@@ -11,5 +11,5 @@ Summary of the Project -
 	All items are of class Item defined	in main.py.
 	RSS Feed generation through the feed.html template.
 	We use IFTTT to render new items to FB page.
-	FB Page - https://www.facebook.com/pages/VNIT-Lost-n-Found/724977707532609
+	FB Page - https://www.facebook.com/vnitlostnfound
 	IFTTT Recipe - https://ifttt.com/recipes/143342-rss-to-fb-page-as-link

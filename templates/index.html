@@ -24,7 +24,8 @@
 </head>
 <body>
 	<b><h2>VNIT <a href="/lost">Lost</a> - n - <a href="/found">Found</a></h2></b>
-	{% if not items %}No items to show.{% else %}Showing {{ type }}{% endif %}
+	<a href="/howto">How to use this website?</a>
+	<br>{% if not items %}No items to show.{% else %}Showing {{ type }}{% endif %}
 	{% for item in items %}
 	<div class="item">
 		<div class="full">

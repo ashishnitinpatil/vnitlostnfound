@@ -45,7 +45,7 @@ class MainHandler(webapp2.RequestHandler):
                 "SELECT * FROM Item ORDER BY created DESC").fetch(25)
             memcache.set(key="most_recent", value=items)
         template_values = {'items': items, 'type': "All items"}
-        path = "index.html"
+        path = "templates/index.html"
         self.response.out.write(template.render(path, template_values))
 
 
@@ -59,7 +59,7 @@ class FeedHandler(webapp2.RequestHandler):
             items = db.GqlQuery(
                 "SELECT * FROM Item ORDER BY created DESC").fetch(25)
             template_values = {'items': items}
-            path = "feed.html"
+            path = "templates/feed.html"
             to_render = template.render(path, template_values)
             memcache.set(key="_feed_", value=to_render)
         self.response.headers['Content-Type'] = 'application/rss'
@@ -76,7 +76,7 @@ class LostHandler(webapp2.RequestHandler):
             items = db.GqlQuery(
                 "SELECT * FROM Item WHERE item_type='lost' ORDER BY created DESC").fetch(25)
             template_values = {'items': items, 'type': "Lost items"}
-            path = "index.html"
+            path = "templates/index.html"
             to_render = template.render(path, template_values)
             memcache.set(key="most_recent_lost", value=to_render)
         self.response.out.write(to_render)
@@ -92,7 +92,7 @@ class FoundHandler(webapp2.RequestHandler):
             items = db.GqlQuery(
                 "SELECT * FROM Item WHERE item_type='found' ORDER BY created DESC").fetch(25)
             template_values = {'items': items, 'type': "Found items"}
-            path = "index.html"
+            path = "templates/index.html"
             to_render = template.render(path, template_values)
             memcache.set(key="most_recent_found", value=to_render)
         self.response.out.write(to_render)
@@ -104,7 +104,7 @@ class SubmitHandler(webapp2.RequestHandler):
             bad_captcha = True
         else:
             bad_captcha = False
-        path = "form.html"
+        path = "templates/form.html"
         today = datetime.datetime.today()
         template_values = {'today': today.isoformat(" ").split()[0],
                            'bad_captcha': bad_captcha}
@@ -156,7 +156,7 @@ class SubmitHandler(webapp2.RequestHandler):
             self.redirect("/submit?q=bad_captcha")
 
     def reCaptcha(self, challenge, remoteIp, response):
-        PRIVATE_KEY = "PRIVATE KEY!"
+        PRIVATE_KEY = "6Lfovu0SAAAAAHv84Kqt0W7JcKml8E9i_oXbgJyC"
         VERIFY_URL = "http://www.google.com/recaptcha/api/verify"
         data = {"privatekey": PRIVATE_KEY,
                 "challenge": challenge,
@@ -179,7 +179,7 @@ class SubmitHandler(webapp2.RequestHandler):
 class TagHandler(webapp2.RequestHandler):
     def get(self, tag):
         tag = tag.upper()
-        path = "tag.html"
+        path = "templates/tag.html"
         try:
             to_render = memcache.get("_tag_"+str(tag))
             if not to_render:
@@ -196,7 +196,7 @@ class TagHandler(webapp2.RequestHandler):
 
 class ItemPermaHandler(webapp2.RequestHandler):
     def get(self, item_id):
-        path = "item.html"
+        path = "templates/item.html"
         try:
             to_render = memcache.get("_item_"+str(item_id))
             if not to_render:
@@ -214,13 +214,19 @@ class ItemPermaHandler(webapp2.RequestHandler):
 
 class AboutHandler(webapp2.RequestHandler):
     def get(self):
-        path = "about.html"
+        path = "templates/about.html"
         self.response.out.write(template.render(path, {}))
 
 
 class ChangelogHandler(webapp2.RequestHandler):
     def get(self):
-        path = "changelog.html"
+        path = "templates/changelog.html"
+        self.response.out.write(template.render(path, {}))
+
+
+class HowtoHandler(webapp2.RequestHandler):
+    def get(self):
+        path = "templates/howto.html"
         self.response.out.write(template.render(path, {}))
 
 
@@ -244,6 +250,7 @@ app = webapp2.WSGIApplication([('/?', MainHandler),
                                ('/tag/(\w+)/?', TagHandler),
                                ('/feed/?', FeedHandler),
                                ('/about/?', AboutHandler),
+                               ('/howto/?', HowtoHandler),
                                ('/changelog/?', ChangelogHandler)],
                               debug=True)
 
