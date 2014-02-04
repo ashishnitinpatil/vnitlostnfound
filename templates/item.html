@@ -3,11 +3,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="/static/favicon.ico" />
-	<meta name="description" content="VNIT Lost n Found is an app to track lost n found items." />
-	<meta name="keywords" content="VNITLostnFound, VNIT, Nagpur, NIT, Lost, Found, LostnFound" />
+	<meta name="description" content={% if item.description %}"{{ item.description }}"
+		{% else %}"{{ item.title }}"{% endif %} />
+	<meta name="keywords" content="{% for tag in item.tags %}{{ tag }}, {% endfor %}VNITLostnFound, VNIT, Nagpur, NIT, Lost, Found, LostnFound" />
 	<meta http-equiv="cache-control" content="no-store" />
 	<meta http-equiv="content-language" content="en-US" />
-	<title>Lost n Found</title>
+	<title>{{ item.title }}</title>
 	<link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
 	<!--Google Analytics-->
 	<script>
@@ -32,10 +33,10 @@
 			<a href="{{ item.img_url }}"><img src="{{ item.img_url }}" alt="image" height="225" width="300" title="{{ item.title }}"></img></a>
 		</div>
 		<div class="content">
-			Tagged with {% for tag in item.tags %}<a class="tag" href="/tag/{{ tag }}">{{ tag }}</a>{% if not forloop.last %} + {% endif %}{% endfor %}<br>
+			Tags:{% for tag in item.tags %} <a class="tag" href="/tag/{{ tag }}">{{ tag }}</a>{% endfor %}<br>
 			{% if item.description %}<br>{{ item.description }}{% endif %}
-			<br>Item {{ item.item_type }} on <b>{{ item.date }}</b>
-			<br>Item {{ item.item_type }} near <b>{{ item.location }}</b>
+			<br>Date {{ item.item_type }} - <b>{{ item.date }}</b>
+			<br>Place {{ item.item_type }} - <b>{{ item.location }}</b>
 			<br><br>
 			<b>Owner details</b>
 			<table class="item_table">

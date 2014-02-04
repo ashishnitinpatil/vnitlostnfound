@@ -62,7 +62,7 @@ class FeedHandler(webapp2.RequestHandler):
             path = "templates/feed.html"
             to_render = template.render(path, template_values)
             memcache.set(key="_feed_", value=to_render)
-        self.response.headers['Content-Type'] = 'application/rss'
+        self.response.headers['Content-Type'] = 'application/rss+xml'
         self.response.out.write(to_render)
 
 
@@ -73,8 +73,9 @@ class LostHandler(webapp2.RequestHandler):
         """
         to_render = memcache.get("most_recent_lost")
         if not to_render:
-            items = db.GqlQuery(
-                "SELECT * FROM Item WHERE item_type='lost' ORDER BY created DESC").fetch(25)
+            items = db.GqlQuery("SELECT * FROM Item "
+                                "WHERE item_type='lost' "
+                                "ORDER BY created DESC").fetch(25)
             template_values = {'items': items, 'type': "Lost items"}
             path = "templates/index.html"
             to_render = template.render(path, template_values)
@@ -89,8 +90,9 @@ class FoundHandler(webapp2.RequestHandler):
         """
         to_render = memcache.get("most_recent_found")
         if not to_render:
-            items = db.GqlQuery(
-                "SELECT * FROM Item WHERE item_type='found' ORDER BY created DESC").fetch(25)
+            items = db.GqlQuery("SELECT * FROM Item "
+                                "WHERE item_type='found' "
+                                "ORDER BY created DESC").fetch(25)
             template_values = {'items': items, 'type': "Found items"}
             path = "templates/index.html"
             to_render = template.render(path, template_values)
@@ -121,8 +123,8 @@ class SubmitHandler(webapp2.RequestHandler):
         if captcha_ok:
             clean_tags = [tag.strip().upper() for tag in
                                 self.request.get("tags").split(',')]
-            if len(clean_tags) > 3:
-                clean_tags = clean_tags[:3]
+            if len(clean_tags) > 4:
+                clean_tags = clean_tags[:4]
             for tag in clean_tags:
                 memcache.delete("_tag_"+str(tag))
             memcache.delete("most_recent")
@@ -130,21 +132,23 @@ class SubmitHandler(webapp2.RequestHandler):
             memcache.delete("most_recent_lost")
             memcache.delete("most_recent_found")
             # Default to an image if not given
-            image_url = self.request.get("url")
-            if not image_url:
-                image_url = "http://i.imgur.com/0yWozO3.png"
-            new_item = Item(
-                            item_type     = self.request.get("type"),
-                            title         = self.request.get("title"),
-                            location      = self.request.get("location"),
-                            date          = self.request.get("date"),
-                            img_url       = image_url,
-                            tags          = clean_tags,
-                            description   = self.request.get("description"),
-                            owner         = self.request.get("name"),
-                            phone         = self.request.get("phone"),
-                            email         = self.request.get("email"),
-                            other_contact = self.request.get("other_contact")
+            image_url = self.request.get("url","http://i.imgur.com/0yWozO3.png")
+            e_mail    = self.request.get("email","not@given.com")
+            item_date = datetime.datetime.strptime(self.request.get("date"),
+                                                   '%Y-%m-%d')
+            neat_date = item_date.strftime("%a, %b %d, %Y")
+            new_item  = Item(
+                             item_type     = self.request.get("type"),
+                             title         = self.request.get("title"),
+                             location      = self.request.get("location"),
+                             date          = neat_date,
+                             img_url       = image_url,
+                             tags          = clean_tags,
+                             description   = self.request.get("description"),
+                             owner         = self.request.get("name"),
+                             phone         = self.request.get("phone"),
+                             email         = e_mail,
+                             other_contact = self.request.get("other_contact")
             )
             new_item.put()
             new_item_id = new_item.key().id()
@@ -156,7 +160,7 @@ class SubmitHandler(webapp2.RequestHandler):
             self.redirect("/submit?q=bad_captcha")
 
     def reCaptcha(self, challenge, remoteIp, response):
-        PRIVATE_KEY = "6Lfovu0SAAAAAHv84Kqt0W7JcKml8E9i_oXbgJyC"
+        PRIVATE_KEY = "RECAPTCHA SECRET KEY"
         VERIFY_URL = "http://www.google.com/recaptcha/api/verify"
         data = {"privatekey": PRIVATE_KEY,
                 "challenge": challenge,
@@ -232,13 +236,13 @@ class HowtoHandler(webapp2.RequestHandler):
 
 def handle_404(request, response, exception):
     logging.exception(exception)
-    response.write("Oops! You seem to have wandered off! " +
+    response.write("Oops! You seem to have wandered off! "
                    "The requested page does not exist.")
     response.set_status(404)
 
 def handle_500(request, response, exception):
     logging.exception(exception)
-    response.write("A server error occurred! " +
+    response.write("A server error occurred! "
                    "Report has been logged. Work underway asap.")
     response.set_status(500)
 

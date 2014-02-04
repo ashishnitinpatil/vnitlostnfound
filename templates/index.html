@@ -35,7 +35,7 @@
 			<a href="{{ item.img_url }}"><img src="{{ item.img_url }}" alt="image" align="center" height="150" width="200" title="{{ item.title }}"></img></a>
 		</div>
 		<div class="content">
-			Tagged with {% for tag in item.tags %}<a class="tag" href="/tag/{{ tag }}">{{ tag }}</a>{% if not forloop.last %} + {% endif %}{% endfor %}<br>
+			Tags:{% for tag in item.tags %} <a class="tag" href="/tag/{{ tag }}">{{ tag }}</a>{% endfor %}<br>
 			<table class="small_table">
 			<tr><td align="right">Date -</td><td align="left"><b>{{ item.date }}</b></td></tr>
 			<tr><td align="right">Location -</td><td align="left"><b>{{ item.location }}</b></td></tr>
